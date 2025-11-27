@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Отказ</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1 style="color: red;">ВАМ ЗАПРЕЩЕН ПРОХОД ДАЛЬШЕ, НАБЛЮДАТЕЛЬ</h1>
+        <p>{{ message }}</p>
+        <a href="/dashboard">Вернуться назад</a>
+    </div>
+</body>
+</html>

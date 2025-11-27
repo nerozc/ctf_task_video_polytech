@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Архив: Сектор 0</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <script src="{{ url_for('static', filename='js/auth.js') }}"></script>
+</head>
+<body>
+    <div class="vignette"></div>
+
+    <nav>
+        <div class="logo">ХРОНИКИ ПЕПЛА</div>
+        <div class="links">
+            <span class="role-badge">{{ role }}</span>
+            <a href="{{ url_for('admin') }}" class="btn-danger">Тайная Канцелярия</a>
+        </div>
+    </nav>
+
+    <div class="container dashboard">
+        
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div class="flash-messages">
+                    {% for message in messages %}
+                        <div class="flash">{{ message }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        <div class="welcome-section">
+            <h2>Сессия: {{ user }}</h2>
+            <p class="lore-text">"{{ phrase }}"</p>
+        </div>
+
+        <div class="archive-label">ДОСТУПНЫЕ ФРАГМЕНТЫ ПАМЯТИ:</div>
+
+        <div class="content-grid">
+            <div class="card visual-card">
+                <div class="card-header">
+                    <h3>Фрагмент #014</h3>
+                    <span class="status-dot"></span>
+                </div>
+                <div class="gif-wrapper">
+                    <img src="{{ url_for('static', filename='gifs/tower.gif') }}" alt="Tower">
+                </div>
+                <div class="card-footer">ЛОКАЦИЯ: ЦИТАДЕЛЬ</div>
+            </div>
+
+            <div class="card visual-card">
+                <div class="card-header">
+                    <h3>Фрагмент #892</h3>
+                    <span class="status-dot"></span>
+                </div>
+                <div class="gif-wrapper">
+                    <img src="{{ url_for('static', filename='gifs/reaper.gif') }}" alt="Reaper">
+                </div>
+                <div class="card-footer">СУЩНОСТЬ: НЕИЗВЕСТНО</div>
+            </div>
+
+            <div class="card visual-card">
+                <div class="card-header">
+                    <h3>Фрагмент #331</h3>
+                    <span class="status-dot"></span>
+                </div>
+                <div class="gif-wrapper">
+                    <img src="{{ url_for('static', filename='gifs/eye.gif') }}" alt="Eye">
+                </div>
+                <div class="card-footer">СОСТОЯНИЕ: НАБЛЮДЕНИЕ</div>
+            </div>
+
+            <div class="card visual-card">
+                <div class="card-header">
+                    <h3>Фрагмент #000</h3>
+                    <span class="status-dot warning"></span>
+                </div>
+                <div class="gif-wrapper">
+                    <img src="{{ url_for('static', filename='gifs/glitch.gif') }}" alt="Glitch">
+                </div>
+                <div class="card-footer">ОШИБКА СИНХРОНИЗАЦИИ</div>
+            </div>
+        </div>
+
+        <div class="upload-section">
+            <h3>Загрузка в Архив</h3>
+            <p class="upload-desc">Добавить визуальную проекцию в общую базу данных.</p>
+            
+            <form action="{{ url_for('upload_file') }}" method="POST" enctype="multipart/form-data" class="upload-form">
+                <label for="file-upload" class="custom-file-upload">
+                    [ ВЫБРАТЬ НОСИТЕЛЬ ]
+                </label>
+                <input id="file-upload" type="file" name="file" accept="image/gif"/>
+                <button type="submit" class="btn-primary" style="width: auto; margin-left: 15px; margin-top: 0;">НАЧАТЬ ПЕРЕДАЧУ</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
