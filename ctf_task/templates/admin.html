@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Тайная Канцелярия</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="vignette"></div>
+    <div class="container" style="margin-top: 10vh;">
+        
+        <h1 style="color: #fff; text-shadow: 0 0 20px rgba(255,255,255,0.5); margin-bottom: 10px;">
+            ТАЙНАЯ КАНЦЕЛЯРИЯ
+        </h1>
+        <p style="font-family: 'Share Tech Mono'; color: #888; margin-bottom: 40px;">
+            Приветствую, Хранитель. Протокол "Омега" активирован.
+        </p>
+        
+        <!-- Блок с видео -->
+        <div style="max-width: 800px; margin: 0 auto 40px auto; border: 1px solid #333; background: #000; padding: 10px; box-shadow: 0 0 50px rgba(0,0,0,0.8);">
+            <div style="font-family: 'Share Tech Mono'; font-size: 0.7rem; color: #a00; text-align: left; margin-bottom: 5px;">
+                ● REC [SECURE CHANNEL]
+            </div>
+            
+            <video autoplay muted loop playsinline style="width: 100%; display: block; opacity: 0.8;">
+                <source src="{{ url_for('static', filename='videos/admin_panel.mp4') }}" type="video/mp4">
+                Ваш терминал не поддерживает видео-поток.
+            </video>
+        </div>
+        
+        <!-- Блок с флагом -->
+        <div style="border: 2px solid #fff; padding: 40px; display: inline-block; background: #111;">
+            <div style="font-family: 'Share Tech Mono'; font-size: 0.8rem; margin-bottom: 10px; color: #666;">
+                MASTER KEY (FLAG):
+            </div>
+            <div style="font-family: 'Courier New'; font-size: 1.5rem; color: #fff; letter-spacing: 2px; font-weight: bold;">
+                {{ flag }}
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>
