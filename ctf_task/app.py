@@ -6,9 +6,12 @@ from flask import Flask, render_template, request, redirect, make_response, url_
 from werkzeug.utils import secure_filename
 from Crypto.Cipher import AES
 from Crypto.Util.Padding import pad, unpad
+from dotenv import load_dotenv  
+
+load_dotenv()
 
 app = Flask(__name__)
-app.secret_key = "ash_chronicles_internal_key"
+app.secret_key = os.environ.get('FLASK_SECRET', 'dev_key_unsafe')
 
 UPLOAD_FOLDER = 'uploads'
 ALLOWED_EXTENSIONS = {'gif'}
@@ -18,14 +21,15 @@ if not os.path.exists(UPLOAD_FOLDER):
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['MAX_CONTENT_LENGTH'] = MAX_FILE_SIZE
 
-FLAG = "CTF{D0_N0T_ST0R3_K3YS_0N_CL13NT_S1D3}"
+FLAG = os.environ.get('FLAG', 'CTF{PLACEHOLDER_FLAG_MISSING}')
+
 SECRET_KEY = b'ObsidianWallKey!' 
 INIT_VECTOR = b'ShadowGateKeepr!' 
 
 LORE_PHRASES = [
-    "Ключи к власти часто оставляют на самом видном месте... в коде мироздания.",
-    "Не ищи ответы в Бездне, посмотри в инструменты своего созерцания.",
-    "Печать создается там же, где и читается.",
+    "Истина не скрыта во тьме сервера, она лежит на поверхности твоего восприятия.",
+    "То, что запирает врата, находится по эту сторону врат.",
+    "Не ищи ответы в Бездне, посмотри в инструменты своего созерцания."
 ]
 
 class AESCipher:
@@ -45,7 +49,7 @@ class AESCipher:
             cipher = AES.new(self.key, AES.MODE_CBC, self.iv)
             decrypted = unpad(cipher.decrypt(enc_data), AES.block_size)
             return json.loads(decrypted.decode('utf-8'))
-        except Exception as e:
+        except:
             return None
 
 cipher_suite = AESCipher(SECRET_KEY, INIT_VECTOR)
@@ -72,7 +76,7 @@ def login():
         if username and password:
             session_data = {
                 "user": username,
-                "role": "guest", 
+                "role": "guest",
                 "exp": 9999999999
             }
             encrypted_token = cipher_suite.encrypt(session_data)
@@ -100,7 +104,7 @@ def dashboard():
     return render_template('dashboard.html', 
                            user=data.get('user'), 
                            role=display_role, 
-                           phrase=random_phrase) 
+                           phrase=random_phrase)
 
 @app.route('/upload', methods=['POST'])
 def upload_file():
